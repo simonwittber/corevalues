@@ -1,0 +1,7 @@
+{
+  "displayName": "Core Values",
+  "name": "com.dffrnt.corevalues",
+  "unity": "2023.3",
+  "version": "0.0.1",
+  "description": "Implementation of the ScriptableObject Architecture pattern."
+}
