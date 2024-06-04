@@ -1,0 +1,18 @@
+{
+    "name": "Dffrnt.CoreValues.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ef8aca1b181d80d4cb985a84fb916e35"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
