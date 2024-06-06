@@ -18,6 +18,8 @@ namespace Dffrnt.CoreValues
 
         [SerializeField]
         private T _initialValue;
+        
+        public event Action<T> OnChange;
 
         public T Value
         {
@@ -27,9 +29,8 @@ namespace Dffrnt.CoreValues
 
         private void OnEnable() => _value = _initialValue;
 
-        public event Action<T> OnChange;
 
-        public T GetValue() => !Application.isPlaying ? _initialValue : _value;
+        public T GetValue() => Application.isPlaying ? _value : _initialValue;
 
         public void SetValue(T value)
         {
@@ -37,7 +38,7 @@ namespace Dffrnt.CoreValues
                 _value = value;
             else
                 _initialValue = value;
-            Action<T> onChange = OnChange;
+            var onChange = OnChange;
             if (onChange == null)
                 return;
             onChange((T) this);

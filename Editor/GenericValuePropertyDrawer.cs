@@ -25,17 +25,10 @@ namespace Dffrnt.CoreValues
 
             void CreateAsset()
             {
-                var path = EditorPrefs.GetString("GVP_CreateAssetPath", "Assets");
                 var defaultName = $"{property.name}.asset";
-                var extension = "asset";
-                path = EditorUtility.SaveFilePanel("Save Asset", path, defaultName, extension);
-                if (path != string.Empty)
+                var newAsset = ScriptableObjectUtility.CreateInstance<U>(defaultName, "ValueObject");
+                if (newAsset != null)
                 {
-                    var relativePath = System.IO.Path.GetRelativePath("Assets", path);
-                    var savedPath = System.IO.Path.GetDirectoryName(relativePath);
-                    EditorPrefs.SetString("GVP_CreateAssetPath", savedPath);
-                    var newAsset = ScriptableObject.CreateInstance<U>();
-                    AssetDatabase.CreateAsset(newAsset, $"Assets/{relativePath}");
                     objectProperty.objectReferenceValue = newAsset;
                     objectProperty.serializedObject.ApplyModifiedProperties();
                 }
@@ -43,7 +36,6 @@ namespace Dffrnt.CoreValues
 
             var createButton = new Button(CreateAsset);
             createButton.text = "Create";
-            
 
             void UpdateVisibleFields()
             {
