@@ -9,7 +9,7 @@ namespace Dffrnt.CoreValues
         [SerializeField] private StringObject _object;
         [SerializeField] private string value;
         [SerializeField] private bool overrideValue;
-        public string Value => !overrideValue ? value : _object.GetValue();
+        public string Value => overrideValue ? _object.GetValue() : value;
         public static implicit operator string(StringValue reference) => reference.Value;
     }
 }
