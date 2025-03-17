@@ -1,20 +1,34 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-namespace Dffrnt.Core
+namespace Dffrnt.CoreValues
 {
-  [CustomEditor(typeof (GameEvent), true)]
-  public class GameEventEditor : Editor
-  {
-    public virtual void OnInspectorGUI()
+    [CustomEditor(typeof(GameEvent), true)]
+    public class GameEventEditor : Editor
     {
-      base.OnInspectorGUI();
-      GUI.enabled = Application.isPlaying;
-      GameEvent target = this.target as GameEvent;
-      if (!GUILayout.Button("Raise", Array.Empty<GUILayoutOption>()))
-        return;
-      GameEvent.Trigger((IInvokable) target);
+        
+        public override VisualElement CreateInspectorGUI()
+        {
+            var root = new VisualElement();
+
+            // Add default inspector
+            var defaultInspector = new IMGUIContainer(() => base.OnInspectorGUI());
+            root.Add(defaultInspector);
+
+            // Add Fire button
+            var fireButton = new Button(() =>
+            {
+                var gameEvent = target as GameEvent;
+                GameEvent.Trigger(gameEvent);
+            })
+            {
+                text = "Fire"
+            };
+            fireButton.SetEnabled(Application.isPlaying);
+            root.Add(fireButton);
+
+            return root;
+        }
     }
-  }
 }

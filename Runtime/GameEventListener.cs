@@ -1,17 +1,25 @@
 ﻿using UnityEngine;
 
-namespace Dffrnt.Core
+namespace Dffrnt.CoreValues
 {
     public class GameEventListener : MonoBehaviour, IInvokable
     {
-        [Tooltip("Event to register with.")] public GameEvent ev;
+        public bool repeat;
+        [Tooltip("Event to register with.")] 
+        [SerializeField] private GameEvent gameEvent;
 
-        private void OnEnable() => ev.Register((IInvokable) this);
+        [SerializeReference, RefPicker] private IGameObjectCommand command;
 
-        private void OnDisable() => ev.Unregister((IInvokable) this);
-
-        public virtual void Invoke()
+        private void OnEnable()
         {
+            gameEvent.Register(this);
         }
+
+        private void OnDisable()
+        {
+            gameEvent.Unregister(this);
+        }
+
+        public virtual void Invoke() => command.Invoke(gameObject);
     }
 }

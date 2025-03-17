@@ -2,6 +2,8 @@
 
 namespace Dffrnt.CoreValues
 {
-    [CustomPropertyDrawer(typeof (BoolValue))]
-    public class BoolValueDrawer : GenericValuePropertyDrawer<BoolValue, BoolObject> { }
+    [CustomPropertyDrawer(typeof(BoolValue))]
+    public class BoolValueDrawer : GenericValuePropertyDrawer<BoolValue, BoolObject>
+    {
+    }
 }

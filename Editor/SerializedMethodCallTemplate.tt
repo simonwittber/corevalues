@@ -1,0 +1,46 @@
+﻿<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Dffrnt.CoreValues" #>
+<#@ import namespace="System.Linq" #>
+<# foreach (var ns in Model.usings) { #>
+using <#= ns #>;
+<# } #>
+using Dffrnt.CoreValues;
+
+
+namespace <#= Model.ns #>
+{
+    [NiceName("<#= Model.niceName #>")]
+    [MenuPath("<#= Model.menuPath #>")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Serializable]
+    public class <#= Model.className #> : IGameObjectCommand
+    {
+        <# foreach (var (type, name) in Model.parameters) { #>
+public <#= type #> <#= name #>;
+        <# } #>
+
+        public <#= Model.returnTypeName #> Invoke(<#= Model.targetTypeName #> target) {
+            <#= Model.returnTypeName == "void" ? "" : "return " #><#= Model.methodIsStatic?Model.targetTypeName:"target" #>.<#= Model.methodName #>(<#= string.Join(", ", Model.parameters.Select(p => p.Item2)) #>);
+        }
+        
+        public void Invoke(GameObject target)
+        {
+            if(_component == null)
+                _component = target.GetComponent<<#= Model.targetTypeName #>>();
+            if (_component == null)
+            {
+                Debug.LogError("<#= Model.className #>.Invoke: target does not have an <#= Model.targetTypeName #> component.");
+                return;
+            }
+            Invoke(_component);
+        }
+        
+        private <#= Model.targetTypeName #> _component;
+    }
+}
+<#+
+    public SerializedMethodCallModel Model;
+#>

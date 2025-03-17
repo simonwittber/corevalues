@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Dffrnt.CoreValues
 {
+    [CoreValueType(typeof(Color))]
     [Serializable]
     public struct ColorValue : IGenericValue
     {
@@ -10,6 +11,10 @@ namespace Dffrnt.CoreValues
         [SerializeField] private Color value;
         [SerializeField] private bool overrideValue;
         public Color Value => !overrideValue ? value : _object.GetValue();
-        public static implicit operator Color(ColorValue reference) => reference.Value;
+
+        public static implicit operator Color(ColorValue reference)
+        {
+            return reference.Value;
+        }
     }
 }

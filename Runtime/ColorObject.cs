@@ -3,5 +3,7 @@
 namespace Dffrnt.CoreValues
 {
     [CreateAssetMenu(menuName = "Core/Color")]
-    public class ColorObject : GenericObject<Color> { }
+    public class ColorObject : GenericObject<Color>
+    {
+    }
 }

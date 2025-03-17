@@ -5,19 +5,16 @@ namespace Dffrnt.CoreValues
 {
     public class GenericObject : ScriptableObject
     {
-        [Multiline]
-        [SerializeField]
-        #pragma warning disable
+        [Multiline] [SerializeField]
+#pragma warning disable
         private string description = "";
     }
-  
+
     public class GenericObject<T> : GenericObject, ICore
     {
-        [SerializeField]
-        private T _value;
+        [SerializeField] private T _value;
 
-        [SerializeField]
-        private T _initialValue;
+        [SerializeField] private T _initialValue;
         
         public event Action<T> OnChange;
 
@@ -27,10 +24,15 @@ namespace Dffrnt.CoreValues
             set => SetValue(value);
         }
 
-        private void OnEnable() => _value = _initialValue;
+        private void OnEnable()
+        {
+            _value = _initialValue;
+        }
 
-
-        public T GetValue() => Application.isPlaying ? _value : _initialValue;
+        public T GetValue()
+        {
+            return Application.isPlaying ? _value : _initialValue;
+        }
 
         public void SetValue(T value)
         {
@@ -38,15 +40,12 @@ namespace Dffrnt.CoreValues
                 _value = value;
             else
                 _initialValue = value;
-            var onChange = OnChange;
-            if (onChange == null)
-                return;
-            onChange((T) this);
+            OnChange?.Invoke(this);
         }
 
         public static implicit operator T(GenericObject<T> reference)
         {
-            return reference != null ? reference.GetValue() : default (T);
+            return reference != null ? reference.GetValue() : default;
         }
     }
 }

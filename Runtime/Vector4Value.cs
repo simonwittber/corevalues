@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Dffrnt.CoreValues
 {
+    [CoreValueType(typeof(Vector4))]
     [Serializable]
     public struct Vector4Value : IGenericValue
     {
@@ -10,6 +11,10 @@ namespace Dffrnt.CoreValues
         [SerializeField] private Vector4 value;
         [SerializeField] private bool overrideValue;
         public Vector4 Value => !overrideValue ? value : _object.GetValue();
-        public static implicit operator Vector4(Vector4Value reference) => reference.Value;
+
+        public static implicit operator Vector4(Vector4Value reference)
+        {
+            return reference.Value;
+        }
     }
 }

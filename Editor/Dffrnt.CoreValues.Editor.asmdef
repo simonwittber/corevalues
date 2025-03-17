@@ -1,18 +1,24 @@
 {
-    "name": "Dffrnt.CoreValues.Editor",
-    "rootNamespace": "",
-    "references": [
-        "GUID:ef8aca1b181d80d4cb985a84fb916e35"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Dffrnt.CoreValues.Editor",
+  "rootNamespace": "",
+  "references": [
+    "GUID:ef8aca1b181d80d4cb985a84fb916e35",
+    "GUID:343deaaf83e0cee4ca978e7df0b80d21",
+    "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+    "GUID:0acc523941302664db1f4e527237feb3",
+    "GUID:27619889b8ba8c24980f49ee34dbb44a",
+    "GUID:9277541ec0ba0494783b56666592a0e8",
+    "GUID:518f8e7f63455044a93e6552a0ecf1e2"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

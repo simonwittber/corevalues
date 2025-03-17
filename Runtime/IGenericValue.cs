@@ -1,6 +1,6 @@
 ﻿namespace Dffrnt.CoreValues
 {
-  public interface IGenericValue
-  {
-  }
+    public interface IGenericValue
+    {
+    }
 }

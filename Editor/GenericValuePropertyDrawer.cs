@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,69 +9,88 @@ namespace Dffrnt.CoreValues
     public class GenericValuePropertyDrawer<T, U> : PropertyDrawer where U : ScriptableObject
     {
 
-        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        void CreateAsset(string name, SerializedProperty objectProperty)
         {
-            // Create property container element.
-            var container = new VisualElement();
-            container.style.flexDirection = FlexDirection.Row;
+            var defaultName = $"{name}.asset";
+            var newAsset = ScriptableObjectUtility.CreateInstance<U>(defaultName, "ValueObject");
+            if (newAsset != null)
+            {
+                objectProperty.objectReferenceValue = newAsset;
+                objectProperty.serializedObject.ApplyModifiedProperties();
+            }
+        }
 
-            // Create property fields.
-            container.Add(new Label(property.name) {style = {width = EditorGUIUtility.labelWidth}});
-
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
             var overrideValueProperty = property.FindPropertyRelative("overrideValue");
-            var overrideValueField = new PropertyField(overrideValueProperty, "") {tooltip = $"Override this value with a reference.", style = {width = 18}};
-            var valueField = new PropertyField(property.FindPropertyRelative("value"), "") {style = {flexGrow = 1}};
+            if(overrideValueProperty.boolValue)
+                return base.GetPropertyHeight(property, label);
+            var valueProperty = property.FindPropertyRelative("value");
+            return EditorGUI.GetPropertyHeight(valueProperty);
+        }
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var overrideValueProperty = property.FindPropertyRelative("overrideValue");
+            var valueProperty = property.FindPropertyRelative("value");
             var objectProperty = property.FindPropertyRelative("_object");
-            var objectField = new PropertyField(objectProperty, "") {style = {flexGrow = 1}};
+            
+            label.text = $"[ {property.displayName} ]";
+            
+            // The next two lines force the property to be recognized as a IGenericValue to the contextualMenu callback.
+            EditorGUI.BeginProperty(position, label, property);
+            EditorGUI.EndProperty();
 
-            void CreateAsset()
+            
+            if (overrideValueProperty.boolValue)
             {
-                var defaultName = $"{property.name}.asset";
-                var newAsset = ScriptableObjectUtility.CreateInstance<U>(defaultName, "ValueObject");
-                if (newAsset != null)
+                if (objectProperty.objectReferenceValue == null)
                 {
-                    objectProperty.objectReferenceValue = newAsset;
-                    objectProperty.serializedObject.ApplyModifiedProperties();
-                }
-            } 
-
-            var createButton = new Button(CreateAsset);
-            createButton.text = "Create";
-
-            void UpdateVisibleFields()
-            {
-                if (overrideValueProperty.boolValue)
-                {
-                    objectField.style.display = DisplayStyle.Flex;
-                    valueField.style.display = DisplayStyle.None;
-                    if (objectProperty.objectReferenceValue == null)
+                    var buttonWidth = 60;
+                    position.width -= buttonWidth;
+                    EditorGUI.PropertyField(position, objectProperty, label);
+                    position.x += position.width;
+                    position.width = buttonWidth;
+                    if (GUI.Button(position, "Create", EditorStyles.miniButton))
                     {
-                        createButton.style.display = DisplayStyle.Flex;
-                    }
-                    else
-                    {
-                        createButton.style.display = DisplayStyle.None;
+                        CreateAsset(property.name, objectProperty);
                     }
                 }
                 else
                 {
-                    objectField.style.display = DisplayStyle.None;
-                    valueField.style.display = DisplayStyle.Flex;
-                    createButton.style.display = DisplayStyle.None;
+                    EditorGUI.PropertyField(position, objectProperty, label);
                 }
             }
+            else
+            {
+                EditorGUI.PropertyField(position, valueProperty, label, true);
+            }
+        }
+    }
+    
+    public static class GenericValuePropertyDrawerExtension
+    {
+        [DidReloadScripts]
+        public static void Init()
+        {
+            EditorApplication.contextualPropertyMenu -= OnPropertyContextMenu;
+            EditorApplication.contextualPropertyMenu += OnPropertyContextMenu;
+        }
 
-            overrideValueField.RegisterValueChangeCallback(evt => { UpdateVisibleFields(); });
-            objectField.RegisterValueChangeCallback(evt => { UpdateVisibleFields(); });
-        
-            container.Add(overrideValueField);
-            overrideValueField.style.marginRight = 16;
-            container.Add(objectField);
-            container.Add(valueField);
-            container.Add(createButton);
-            UpdateVisibleFields();
-
-            return container;
+        static void OnPropertyContextMenu(GenericMenu menu, SerializedProperty property)
+        {
+            if (property.propertyType == SerializedPropertyType.Generic)
+            {
+                var overrideProperty = property.FindPropertyRelative("overrideValue");
+                if (overrideProperty != null && overrideProperty.propertyType == SerializedPropertyType.Boolean)
+                {
+                    menu.AddItem(new GUIContent("Override Value?"), overrideProperty.boolValue, () =>
+                    {
+                        overrideProperty.boolValue = !overrideProperty.boolValue;
+                        property.serializedObject.ApplyModifiedProperties();
+                    });
+                }
+            }
         }
     }
 }
