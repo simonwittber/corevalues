@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Object = UnityEngine.Object;
 
 namespace Dffrnt.CoreValues
 {
-    [CustomEditor(typeof(GameEvent), true)]
-    public class GameEventEditor : Editor
+    [CustomEditor(typeof(GenericObject), true)]
+    public class GenericValueEditor : Editor
     {
         private List<Object> dependencies = new List<Object>();
         private List<SearchItem> searchResults = new List<SearchItem>();
@@ -37,13 +34,6 @@ namespace Dffrnt.CoreValues
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            var e = target as GameEvent;
-            GUI.enabled = Application.isPlaying;
-            if (GUILayout.Button("Raise"))
-            {
-                e.Invoke();
-            }
-            GUI.enabled = true;
             GUILayout.Space(16);
             GUILayout.Label("Hierarchy");
             foreach (var i in searchResults)

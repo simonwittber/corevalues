@@ -35,12 +35,12 @@ namespace Dffrnt.CoreValues
             var valueProperty = property.FindPropertyRelative("value");
             var objectProperty = property.FindPropertyRelative("_object");
             
-            label.text = $"[ {property.displayName} ]";
+            // label.text = $"[ {property.displayName} ]";
+            label = new GUIContent($"[ {property.displayName} ]", label.tooltip);
             
             // The next two lines force the property to be recognized as a IGenericValue to the contextualMenu callback.
             EditorGUI.BeginProperty(position, label, property);
             EditorGUI.EndProperty();
-
             
             if (overrideValueProperty.boolValue)
             {
@@ -75,6 +75,7 @@ namespace Dffrnt.CoreValues
         {
             EditorApplication.contextualPropertyMenu -= OnPropertyContextMenu;
             EditorApplication.contextualPropertyMenu += OnPropertyContextMenu;
+           
         }
 
         static void OnPropertyContextMenu(GenericMenu menu, SerializedProperty property)
@@ -84,7 +85,7 @@ namespace Dffrnt.CoreValues
                 var overrideProperty = property.FindPropertyRelative("overrideValue");
                 if (overrideProperty != null && overrideProperty.propertyType == SerializedPropertyType.Boolean)
                 {
-                    menu.AddItem(new GUIContent("Override Value?"), overrideProperty.boolValue, () =>
+                    menu.AddItem(new GUIContent("Enable CoreValue slot?"), overrideProperty.boolValue, () =>
                     {
                         overrideProperty.boolValue = !overrideProperty.boolValue;
                         property.serializedObject.ApplyModifiedProperties();

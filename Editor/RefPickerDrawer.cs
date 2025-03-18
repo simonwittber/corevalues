@@ -25,7 +25,8 @@ namespace Dffrnt.CoreValues
             {
                 fieldType = fieldInfo.FieldType.GetElementType() ?? fieldInfo.FieldType.GetGenericArguments()[0];
             }
-            var typeName = NiceName(property.managedReferenceValue?.GetType()) ?? "None";
+            
+            var typeName = property.managedReferenceValue == null?"None":NiceName(property.managedReferenceValue.GetType());
             var rect = position;
             var labelWidth = EditorGUIUtility.labelWidth + 2;
             rect.x += labelWidth;
@@ -35,12 +36,7 @@ namespace Dffrnt.CoreValues
             
             if (EditorGUI.DropdownButton(rect, new(typeName), FocusType.Keyboard))
             {
-                // var menu = new GenericMenu();
-                // menu.AddItem(new("None"), typeName == "None", () =>
-                // {
-                //     property.managedReferenceValue = default;
-                //     property.serializedObject.ApplyModifiedProperties();
-                // });
+                
                 var allTypes = TypeCache.GetTypesDerivedFrom(fieldType).ToArray();
                 var dropdown = new TypeSelectorDropDown(new AdvancedDropdownState(), allTypes);
                 dropdown.callback = (type) =>
@@ -48,21 +44,9 @@ namespace Dffrnt.CoreValues
                     property.managedReferenceValue = type == null?null:System.Activator.CreateInstance(type);
                     property.serializedObject.ApplyModifiedProperties();
                 };
-                // foreach (var type in TypeCache.GetTypesDerivedFrom(fieldType))
-                // {
-                //     var constructor = type.GetConstructor(System.Type.EmptyTypes);
-                //     if(constructor == null) continue;
-                //     var menuPathAttribute = type.GetCustomAttribute<MenuPathAttribute>();
-                //     var menuPath = menuPathAttribute?.path ?? type.Name;
-                //     menu.AddItem(new(menuPath), typeName == type.Name, () =>
-                //     {
-                //         property.managedReferenceValue = constructor.Invoke(null);
-                //         property.serializedObject.ApplyModifiedProperties();
-                //     });
-                // }
+                
                 rect.height = 0;
                 dropdown.Show(rect);
-                // menu.DropDown(rect);
             }
             EditorGUI.PropertyField(new Rect(position.x, position.y, position.width, position.height), property, label, true);
         }
@@ -72,7 +56,7 @@ namespace Dffrnt.CoreValues
             if (type == null) return null;
             var nna = type.GetCustomAttribute<NiceNameAttribute>();
             if (nna != null) return nna.name;
-            return null;
+            return type.Name;
         }
     }
     
@@ -121,36 +105,5 @@ namespace Dffrnt.CoreValues
             EditorGUI.PropertyField(new Rect(position.x, position.y, position.width, position.height), property, label, true);
         }
       
-    }
-
-    [CustomPropertyDrawer(typeof(Overrideable<>))]
-    public class OverridableDrawer : PropertyDrawer
-    {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return EditorGUI.GetPropertyHeight(property, label);
-        }
-
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            var hasValueProperty = property.FindPropertyRelative(nameof(Overrideable<bool>.hasValue));
-            var valueProperty = property.FindPropertyRelative(nameof(Overrideable<bool>.value));
-            
-            var rect = position;
-            var labelWidth = EditorGUIUtility.labelWidth + 2;
-            // rect.x += labelWidth;
-            // rect.width -= labelWidth;
-            rect.height = EditorGUIUtility.singleLineHeight;
-            EditorGUI.PropertyField(rect, hasValueProperty, label);
-            if (hasValueProperty.boolValue)
-            {
-                rect.x += labelWidth + 22;
-                rect.width -= (labelWidth + 22);
-                EditorGUI.PropertyField(rect, valueProperty, GUIContent.none);
-            }
-
-            property.serializedObject.ApplyModifiedProperties();
-
-        }
     }
 }

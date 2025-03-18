@@ -19,9 +19,9 @@ namespace CoreValues.Editor
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+    #line 1 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public partial class SerializedMethodCallTemplate : SerializedMethodCallTemplateBase
+    public partial class SerializedPropertySetterTemplate : SerializedPropertySetterTemplateBase
     {
 #line hidden
         /// <summary>
@@ -30,195 +30,147 @@ namespace CoreValues.Editor
         public virtual string TransformText()
         {
             
-            #line 7 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 7 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
  foreach (var ns in model.usings) { 
             
             #line default
             #line hidden
             this.Write("using ");
             
-            #line 8 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 8 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ns));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 9 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 9 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("using Dffrnt.CoreValues;\r\n\r\n\r\nnamespace ");
             
-            #line 13 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 13 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.ns));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    [NiceName(\"");
             
-            #line 15 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 15 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.niceName));
             
             #line default
             #line hidden
             this.Write("\")]\r\n    [MenuPath(\"");
             
-            #line 16 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 16 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.menuPath));
             
             #line default
             #line hidden
             this.Write("\")]\r\n    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]\r\n    [System.Serializable]\r\n    public class ");
             
-            #line 19 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 19 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.className));
             
             #line default
             #line hidden
-            this.Write(" : ");
+            this.Write(" : IGameObjectCommand\r\n    {\r\n        ");
             
-            #line 19 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.baseClass));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n    {\r\n        ");
-            
-            #line 21 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
- foreach (var (type, name, defaultValue) in model.parameters) { 
+            #line 21 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+ foreach (var (type, name) in model.parameters) { 
             
             #line default
             #line hidden
-            this.Write("public ");
+            this.Write("public Overrideable<");
             
-            #line 22 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 22 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(type));
             
             #line default
             #line hidden
-            this.Write(" ");
+            this.Write("> ");
             
-            #line 22 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 22 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 22 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
- if (!string.IsNullOrEmpty(defaultValue)) { 
-            
-            #line default
-            #line hidden
-            this.Write(" = ");
-            
-            #line 22 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(defaultValue));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 22 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
- } 
             
             #line default
             #line hidden
             this.Write(";\r\n        ");
             
-            #line 23 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 23 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
  } 
             
             #line default
             #line hidden
-            this.Write("\r\n        public ");
+            this.Write("\r\n        public void Invoke(");
             
-            #line 25 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.returnTypeName));
-            
-            #line default
-            #line hidden
-            this.Write(" Invoke(");
-            
-            #line 25 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 25 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.targetTypeName));
             
             #line default
             #line hidden
             this.Write(" target) {\r\n            ");
             
-            #line 26 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.returnTypeName == "void" ? "" : "return "));
+            #line 26 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+ foreach (var (type, name) in model.parameters) { 
             
             #line default
             #line hidden
+            this.Write("            if(");
             
-            #line 26 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.methodIsStatic?model.targetTypeName:"target"));
-            
-            #line default
-            #line hidden
-            this.Write(".");
-            
-            #line 26 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.methodName));
+            #line 27 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
-            this.Write("(");
+            this.Write(".hasValue) target.");
             
-            #line 26 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", model.parameters.Select(p => p.Item2))));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n        }\r\n        \r\n        public ");
-            
-            #line 29 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.returnTypeName));
+            #line 27 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
-            this.Write(" Invoke(GameObject target)\r\n        {\r\n            if(_component == null)\r\n                _component = target.GetComponent<");
+            this.Write(" = ");
             
-            #line 32 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 27 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(name));
+            
+            #line default
+            #line hidden
+            this.Write(".value;\r\n            ");
+            
+            #line 28 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n        \r\n        public void Invoke(GameObject target)\r\n        {\r\n            if(_component == null)\r\n                _component = target.GetComponent<");
+            
+            #line 34 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.targetTypeName));
             
             #line default
             #line hidden
             this.Write(">();\r\n            if (_component == null)\r\n            {\r\n                Debug.LogError(\"");
             
-            #line 35 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 37 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.className));
             
             #line default
             #line hidden
             this.Write(".Invoke: target does not have an ");
             
-            #line 35 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 37 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.targetTypeName));
             
             #line default
             #line hidden
-            this.Write(" component.\");\r\n                return ");
+            this.Write(" component.\");\r\n                return;\r\n            }\r\n            Invoke(_component);\r\n        }\r\n        \r\n        private ");
             
-            #line 36 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.returnTypeName == "void" ? "" : "default"));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n            }\r\n            ");
-            
-            #line 38 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(model.returnTypeName == "void" ? "" : "return "));
-            
-            #line default
-            #line hidden
-            this.Write("Invoke(_component);\r\n        }\r\n        \r\n        private ");
-            
-            #line 41 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+            #line 43 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.targetTypeName));
             
             #line default
@@ -227,9 +179,9 @@ namespace CoreValues.Editor
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 44 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedMethodCallTemplate.tt"
+        #line 46 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
 
-    public SerializedMethodCallModel model;
+    public SerializedPropertySetterModel model;
 
         
         #line default
@@ -243,7 +195,7 @@ namespace CoreValues.Editor
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    public class SerializedMethodCallTemplateBase
+    public class SerializedPropertySetterTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

@@ -16,31 +16,33 @@ namespace <#= model.ns #>
     [MenuPath("<#= model.menuPath #>")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Serializable]
-    public class <#= model.className #> : <#= model.baseClass #>
+    public class <#= model.className #> : IGameObjectCommand
     {
-        <# foreach (var (type, name, defaultValue) in model.parameters) { #>
-public <#= type #> <#= name #> <# if (!string.IsNullOrEmpty(defaultValue)) { #> = <#= defaultValue #> <# } #>;
+        <# foreach (var (type, name) in model.parameters) { #>
+public Overrideable<<#= type #>> <#= name #>;
         <# } #>
 
-        public <#= model.returnTypeName #> Invoke(<#= model.targetTypeName #> target) {
-            <#= model.returnTypeName == "void" ? "" : "return " #><#= model.methodIsStatic?model.targetTypeName:"target" #>.<#= model.methodName #>(<#= string.Join(", ", model.parameters.Select(p => p.Item2)) #>);
+        public void Invoke(<#= model.targetTypeName #> target) {
+            <# foreach (var (type, name) in model.parameters) { #>
+            if(<#= name #>.hasValue) target.<#= name #> = <#= name #>.value;
+            <# } #>
         }
         
-        public <#= model.returnTypeName #> Invoke(GameObject target)
+        public void Invoke(GameObject target)
         {
             if(_component == null)
                 _component = target.GetComponent<<#= model.targetTypeName #>>();
             if (_component == null)
             {
                 Debug.LogError("<#= model.className #>.Invoke: target does not have an <#= model.targetTypeName #> component.");
-                return <#= model.returnTypeName == "void" ? "" : "default" #>;
+                return;
             }
-            <#= model.returnTypeName == "void" ? "" : "return " #>Invoke(_component);
+            Invoke(_component);
         }
         
         private <#= model.targetTypeName #> _component;
     }
 }
 <#+
-    public SerializedMethodCallModel model;
+    public SerializedPropertySetterModel model;
 #>

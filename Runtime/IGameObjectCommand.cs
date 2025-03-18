@@ -6,4 +6,9 @@ namespace Dffrnt.CoreValues
     {
         void Invoke(GameObject target);
     }
+    
+    public interface IGameObjectCondition
+    {
+        bool Invoke(GameObject target);
+    }
 }

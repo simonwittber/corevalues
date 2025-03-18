@@ -7,7 +7,7 @@ namespace Dffrnt.CoreValues
     {
         public string className = "GeneratedClass";
         public string ns = "Dffrnt.CoreValues";
-        public List<(string,string)> parameters = new List<(string, string)>();
+        public List<(string,string, string)> parameters = new List<(string, string, string)>();
         public string targetTypeName = "UnityEngine.Debug";
         public string returnTypeName = "void";
         public string methodName = "Log";
@@ -15,5 +15,6 @@ namespace Dffrnt.CoreValues
         public string menuPath = "GameObject/Debug/Log";
         public bool methodIsStatic;
         public string niceName;
+        public string baseClass;
     }
 }
