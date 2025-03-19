@@ -10,7 +10,7 @@ namespace Dffrnt.CoreValues
         private string description = "";
     }
 
-    public class GenericObject<T> : GenericObject, ICore
+    public class GenericObject<T> : GenericObject
     {
         [SerializeField] private T _value;
 

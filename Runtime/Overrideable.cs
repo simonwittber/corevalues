@@ -7,7 +7,5 @@ namespace Dffrnt.CoreValues
     {
         public T value;
         public bool hasValue;
-
-
     }
 }

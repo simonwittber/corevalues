@@ -21,11 +21,12 @@ namespace <#= model.ns #>
         <# foreach (var (type, name) in model.parameters) { #>
 public Overrideable<<#= type #>> <#= name #>;
         <# } #>
-
+        
         public void Invoke(<#= model.targetTypeName #> target) {
             <# foreach (var (type, name) in model.parameters) { #>
-            if(<#= name #>.hasValue) target.<#= name #> = <#= name #>.value;
+if(<#= name #>.hasValue) target.<#= name #> = <#= name #>.value;
             <# } #>
+        
         }
         
         public void Invoke(GameObject target)

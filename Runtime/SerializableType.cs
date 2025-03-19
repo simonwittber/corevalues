@@ -17,11 +17,4 @@ namespace Dffrnt.CoreValues
             typeName = type?.AssemblyQualifiedName;
         }
     }
-    
-    [Serializable]
-    public class SelectableType
-    {
-        [SerializeReference] public SerializableType baseType;
-        [SerializeReference] public SerializableType selectedType;
-    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dffrnt.CoreValues;
+using Dffrnt.CoreValues.Generated;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
@@ -11,7 +12,6 @@ using UnityEngine.UIElements;
 
 namespace Dffrnt.CoreValues
 {
-    
     
     [CustomPropertyDrawer(typeof(RefPickerAttribute))]
     public class RefPickerDrawer : PropertyDrawer
@@ -48,6 +48,7 @@ namespace Dffrnt.CoreValues
                 rect.height = 0;
                 dropdown.Show(rect);
             }
+            
             EditorGUI.PropertyField(new Rect(position.x, position.y, position.width, position.height), property, label, true);
         }
 

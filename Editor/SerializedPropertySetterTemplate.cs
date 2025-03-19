@@ -105,7 +105,7 @@ namespace CoreValues.Editor
             
             #line default
             #line hidden
-            this.Write("\r\n        public void Invoke(");
+            this.Write("        \r\n        public void Invoke(");
             
             #line 25 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.targetTypeName));
@@ -119,7 +119,7 @@ namespace CoreValues.Editor
             
             #line default
             #line hidden
-            this.Write("            if(");
+            this.Write("if(");
             
             #line 27 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
@@ -147,30 +147,30 @@ namespace CoreValues.Editor
             
             #line default
             #line hidden
-            this.Write("        }\r\n        \r\n        public void Invoke(GameObject target)\r\n        {\r\n            if(_component == null)\r\n                _component = target.GetComponent<");
+            this.Write("        \r\n        }\r\n        \r\n        public void Invoke(GameObject target)\r\n        {\r\n            if(_component == null)\r\n                _component = target.GetComponent<");
             
-            #line 34 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+            #line 35 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.targetTypeName));
             
             #line default
             #line hidden
             this.Write(">();\r\n            if (_component == null)\r\n            {\r\n                Debug.LogError(\"");
             
-            #line 37 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+            #line 38 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.className));
             
             #line default
             #line hidden
             this.Write(".Invoke: target does not have an ");
             
-            #line 37 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+            #line 38 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.targetTypeName));
             
             #line default
             #line hidden
             this.Write(" component.\");\r\n                return;\r\n            }\r\n            Invoke(_component);\r\n        }\r\n        \r\n        private ");
             
-            #line 43 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+            #line 44 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.targetTypeName));
             
             #line default
@@ -179,7 +179,7 @@ namespace CoreValues.Editor
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 46 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
+        #line 47 "K:\SRWPackages\Assets\CoreValues\Editor\SerializedPropertySetterTemplate.tt"
 
     public SerializedPropertySetterModel model;
 
